@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bg1ggnmfbmjln"]
+
+[ext_resource type="Script" path="res://actions/EatAction.gd" id="1_lqnog"]
+
+[node name="EatAction" type="UtilityAIAction"]
+script = ExtResource("1_lqnog")
