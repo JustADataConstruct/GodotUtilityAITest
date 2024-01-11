@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2uvlk6lf37s4"]
+
+[ext_resource type="Script" path="res://actions/MoveToPointAction.gd" id="1_3d8sk"]
+
+[node name="MoveToPointAction" type="UtilityAIAction"]
+script = ExtResource("1_3d8sk")

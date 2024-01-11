@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://e423q26evy41"]
+
+[ext_resource type="Script" path="res://actions/FindRandomPointAction.gd" id="1_eojrh"]
+
+[node name="FindRandomPointAction" type="UtilityAIAction"]
+script = ExtResource("1_eojrh")

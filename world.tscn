@@ -1,12 +1,13 @@
-[gd_scene load_steps=17 format=3 uid="uid://bmpyd0khuv0dk"]
+[gd_scene load_steps=18 format=3 uid="uid://bmpyd0khuv0dk"]
 
 [ext_resource type="Script" path="res://Agent.gd" id="1_gsrb5"]
 [ext_resource type="Script" path="res://world.gd" id="1_jjsay"]
 [ext_resource type="PackedScene" uid="uid://cjwl1jluh7p4p" path="res://resources/FoodResource.tscn" id="2_eq8h2"]
 [ext_resource type="PackedScene" uid="uid://bg1ggnmfbmjln" path="res://actions/EatAction.tscn" id="2_hs87g"]
 [ext_resource type="PackedScene" uid="uid://dpcva6cidl7kl" path="res://props/PropTree.tscn" id="3_dsy5f"]
-[ext_resource type="PackedScene" uid="uid://b1qboklashbdu" path="res://actions/IdleAction.tscn" id="4_d0yaq"]
 [ext_resource type="PackedScene" uid="uid://bwl07dc517o6j" path="res://actions/FindFoodAction.tscn" id="4_yps1v"]
+[ext_resource type="PackedScene" uid="uid://d2uvlk6lf37s4" path="res://actions/MoveToPointAction.tscn" id="6_bo46c"]
+[ext_resource type="PackedScene" uid="uid://e423q26evy41" path="res://actions/FindRandomPointAction.tscn" id="8_g71up"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_05fb4"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -107,6 +108,8 @@ input_sensor = NodePath("../../../AtEatingSpotSensor")
 
 [node name="FindFoodAction" parent="Agent/UtilityAIAgent/FindFood" instance=ExtResource("4_yps1v")]
 
+[node name="MoveToPointAction" parent="Agent/UtilityAIAgent/FindFood" instance=ExtResource("6_bo46c")]
+
 [node name="Eat" type="UtilityAIBehaviour" parent="Agent/UtilityAIAgent"]
 
 [node name="Can I eat?" type="UtilityAIConsiderationGroup" parent="Agent/UtilityAIAgent/Eat"]
@@ -131,7 +134,9 @@ cooldown_seconds = 5.0
 [node name="Default" type="UtilityAIConsideration" parent="Agent/UtilityAIAgent/Idle"]
 activation_input_value = 0.1
 
-[node name="IdleAction" parent="Agent/UtilityAIAgent/Idle" instance=ExtResource("4_d0yaq")]
+[node name="FindRandomPointAction" parent="Agent/UtilityAIAgent/Idle" instance=ExtResource("8_g71up")]
+
+[node name="MoveToPointAction" parent="Agent/UtilityAIAgent/Idle" instance=ExtResource("6_bo46c")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Agent"]
 mesh = SubResource("CapsuleMesh_rss5u")
