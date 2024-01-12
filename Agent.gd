@@ -18,21 +18,23 @@ var current_action:UtilityAIAction
 
 # Needs
 @export var hunger:float = 0.5
-@export var on_eating_spot:bool = false
 @export var in_danger:bool = false
 
 # Sensors
 var hunger_sensor:UtilityAISensor
 var is_at_eating_spot_sensor:UtilityAIBooleanSensor
 var danger_sensor:UtilityAIBooleanSensor
+var resource_sensor:UtilityAIBooleanSensor
 
 @onready var nav:NavigationAgent3D = $NavigationAgent3D
+@export var current_resource_node:Node3D = null
 
 func _ready():
 	agent = $UtilityAIAgent
 	hunger_sensor = $UtilityAIAgent/HungerSensor
 	is_at_eating_spot_sensor = $UtilityAIAgent/AtEatingSpotSensor
 	danger_sensor = $UtilityAIAgent/DangerSensor
+	resource_sensor = $UtilityAIAgent/EnoughResourcesSensor
 	
 
 func _process(delta):
@@ -40,8 +42,9 @@ func _process(delta):
 	top_behavior_label = agent.top_scoring_behaviour_name
 	
 	hunger_sensor.sensor_value = hunger
-	is_at_eating_spot_sensor.boolean_value = on_eating_spot
+	is_at_eating_spot_sensor.boolean_value = current_resource_node != null and current_resource_node.is_in_group("food_resource")
 	danger_sensor.boolean_value = in_danger
+	resource_sensor.boolean_value = current_resource_node.amount > 0 if current_resource_node != null else false
 
 	agent.evaluate_options(delta)
 	agent.update_current_behaviour()

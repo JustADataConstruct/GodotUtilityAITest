@@ -66,5 +66,11 @@ transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 1.48061, 1.29573, -1.26393)
 mesh = SubResource("ArrayMesh_q37i4")
 skeleton = NodePath("")
 
+[node name="AmountLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.20685, 0)
+pixel_size = 0.05
+billboard = 1
+text = "30"
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -21,6 +21,8 @@ The final objective was to get, at a minimum, a simplified but close enough vers
 As of the start of this repository, I have a basic system in place from which I can build upon. 
 I have a character who can move around the map, losing energy as it moves, and replenish energy by eating; eating is directed by a pair of behaviours "FindFood" and "Eat", with 2-3 considerations each from which the character figures out if it's hungry, if it's at a food source or must seek one (currently one, position hardcoded) and move towards it, then eat once it's there until it is satisfied enough or it finds itself in danger (no danger sources are in yet, but the "is in danger" sensor can be toggled from the Godot inspector to forcefully interrupt the eating action), and afterwards will continue happily wandering around the map.
 ### 12/01/24 Smarter resource gathering
-FindFoodAction has been abstracted into FindResourceAction, and the character now knows to find the closest resource of the indicated type (thanks to Godot's groups).
+* FindFoodAction has been abstracted into FindResourceAction, and the character now knows to find the closest resource of the indicated type (thanks to Godot's groups).
+* While the code involved is a bit of a mess, resources are now finite and the character can know the amount when searching and move to a different resource node if the current one runs out of food. This needs work however since if there are no resources left on the world the character will freeze on a loop of trying to find more, which is... less than ideal.
+
 
 

@@ -61,9 +61,11 @@ environment = SubResource("Environment_oxqkv")
 
 [node name="FoodResource" parent="." instance=ExtResource("2_eq8h2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4665, 1, 0)
+amount = 1
 
 [node name="FoodResource2" parent="." instance=ExtResource("2_eq8h2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6959, 1, -26.7475)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6959, 1, 24.0128)
+amount = 1
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_3jux0")
@@ -95,6 +97,8 @@ script = ExtResource("1_gsrb5")
 
 [node name="DangerSensor" type="UtilityAIBooleanSensor" parent="Agent/UtilityAIAgent"]
 
+[node name="EnoughResourcesSensor" type="UtilityAIBooleanSensor" parent="Agent/UtilityAIAgent"]
+
 [node name="FindFood" type="UtilityAIBehaviour" parent="Agent/UtilityAIAgent"]
 
 [node name="Do I need to?" type="UtilityAIConsiderationGroup" parent="Agent/UtilityAIAgent/FindFood"]
@@ -123,6 +127,9 @@ activation_curve = SubResource("Curve_qu262")
 
 [node name="I am at an eating spot" type="UtilityAIBooleanConsideration" parent="Agent/UtilityAIAgent/Eat/Can I eat?" node_paths=PackedStringArray("input_sensor")]
 input_sensor = NodePath("../../../AtEatingSpotSensor")
+
+[node name="This eating spot has enough resources" type="UtilityAIBooleanConsideration" parent="Agent/UtilityAIAgent/Eat/Can I eat?" node_paths=PackedStringArray("input_sensor")]
+input_sensor = NodePath("../../../EnoughResourcesSensor")
 
 [node name="I\'m not in danger" type="UtilityAIBooleanConsideration" parent="Agent/UtilityAIAgent/Eat/Can I eat?" node_paths=PackedStringArray("input_sensor")]
 true_score_value = 0.0
