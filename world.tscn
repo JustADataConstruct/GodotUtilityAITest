@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cjwl1jluh7p4p" path="res://resources/FoodResource.tscn" id="2_eq8h2"]
 [ext_resource type="PackedScene" uid="uid://bg1ggnmfbmjln" path="res://actions/EatAction.tscn" id="2_hs87g"]
 [ext_resource type="PackedScene" uid="uid://dpcva6cidl7kl" path="res://props/PropTree.tscn" id="3_dsy5f"]
-[ext_resource type="PackedScene" uid="uid://bwl07dc517o6j" path="res://actions/FindFoodAction.tscn" id="4_yps1v"]
+[ext_resource type="PackedScene" uid="uid://bwl07dc517o6j" path="res://actions/FindResourceAction.tscn" id="4_yps1v"]
 [ext_resource type="PackedScene" uid="uid://d2uvlk6lf37s4" path="res://actions/MoveToPointAction.tscn" id="6_bo46c"]
 [ext_resource type="PackedScene" uid="uid://e423q26evy41" path="res://actions/FindRandomPointAction.tscn" id="8_g71up"]
 
@@ -60,8 +60,10 @@ shadow_enabled = true
 environment = SubResource("Environment_oxqkv")
 
 [node name="FoodResource" parent="." instance=ExtResource("2_eq8h2")]
-unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4665, 1, 0)
+
+[node name="FoodResource2" parent="." instance=ExtResource("2_eq8h2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6959, 1, -26.7475)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_3jux0")
@@ -107,6 +109,7 @@ false_score_value = 1.0
 input_sensor = NodePath("../../../AtEatingSpotSensor")
 
 [node name="FindFoodAction" parent="Agent/UtilityAIAgent/FindFood" instance=ExtResource("4_yps1v")]
+resource = "food_resource"
 
 [node name="MoveToPointAction" parent="Agent/UtilityAIAgent/FindFood" instance=ExtResource("6_bo46c")]
 

@@ -48,7 +48,7 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_wr7sm")
 
-[node name="FoodResource" type="Area3D"]
+[node name="FoodResource" type="Area3D" groups=["food_resource"]]
 script = ExtResource("1_obd14")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

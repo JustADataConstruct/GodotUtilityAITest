@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bwl07dc517o6j"]
-
-[ext_resource type="Script" path="res://actions/FindFoodAction.gd" id="1_5fbkl"]
-
-[node name="FindFoodAction" type="UtilityAIAction"]
-script = ExtResource("1_5fbkl")
