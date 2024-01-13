@@ -1,7 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://bmpyd0khuv0dk"]
+[gd_scene load_steps=19 format=3 uid="uid://bmpyd0khuv0dk"]
 
 [ext_resource type="Script" path="res://Agent.gd" id="1_gsrb5"]
 [ext_resource type="Script" path="res://world.gd" id="1_jjsay"]
+[ext_resource type="PackedScene" uid="uid://beqyf7wwki1lo" path="res://debug_window.tscn" id="2_8ok0g"]
 [ext_resource type="PackedScene" uid="uid://cjwl1jluh7p4p" path="res://resources/FoodResource.tscn" id="2_eq8h2"]
 [ext_resource type="PackedScene" uid="uid://bg1ggnmfbmjln" path="res://actions/EatAction.tscn" id="2_hs87g"]
 [ext_resource type="PackedScene" uid="uid://dpcva6cidl7kl" path="res://props/PropTree.tscn" id="3_dsy5f"]
@@ -49,6 +50,19 @@ height = 4.0
 [node name="world" type="Node3D"]
 script = ExtResource("1_jjsay")
 
+[node name="Node" type="Node" parent="."]
+
+[node name="DebugWindow" parent="Node" node_paths=PackedStringArray("agent") instance=ExtResource("2_8ok0g")]
+initial_position = 0
+position = Vector2i(0, 250)
+keep_title_visible = true
+agent = NodePath("../../Agent")
+
+[node name="ShowWindowButton" type="Button" parent="Node"]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Show behaviour window"
+
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 36.0082, 16.08)
 
@@ -61,11 +75,9 @@ environment = SubResource("Environment_oxqkv")
 
 [node name="FoodResource" parent="." instance=ExtResource("2_eq8h2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4665, 1, 0)
-amount = 1
 
 [node name="FoodResource2" parent="." instance=ExtResource("2_eq8h2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6959, 1, 24.0128)
-amount = 1
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_3jux0")
@@ -115,7 +127,7 @@ input_sensor = NodePath("../../../AtEatingSpotSensor")
 [node name="FindFoodAction" parent="Agent/UtilityAIAgent/FindFood" instance=ExtResource("4_yps1v")]
 resource = "food_resource"
 
-[node name="MoveToPointAction" parent="Agent/UtilityAIAgent/FindFood" instance=ExtResource("6_bo46c")]
+[node name="MoveToFoodAction" parent="Agent/UtilityAIAgent/FindFood" instance=ExtResource("6_bo46c")]
 
 [node name="Eat" type="UtilityAIBehaviour" parent="Agent/UtilityAIAgent"]
 
@@ -146,7 +158,7 @@ activation_input_value = 0.1
 
 [node name="FindRandomPointAction" parent="Agent/UtilityAIAgent/Idle" instance=ExtResource("8_g71up")]
 
-[node name="MoveToPointAction" parent="Agent/UtilityAIAgent/Idle" instance=ExtResource("6_bo46c")]
+[node name="MoveToRandomAction" parent="Agent/UtilityAIAgent/Idle" instance=ExtResource("6_bo46c")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Agent"]
 mesh = SubResource("CapsuleMesh_rss5u")
@@ -159,4 +171,5 @@ path_desired_distance = 4.0
 debug_enabled = true
 debug_path_custom_color = Color(1, 0, 0, 1)
 
+[connection signal="pressed" from="Node/ShowWindowButton" to="." method="_on_show_window_button_pressed"]
 [connection signal="action_changed" from="Agent/UtilityAIAgent" to="Agent" method="_on_utility_ai_agent_action_changed"]
