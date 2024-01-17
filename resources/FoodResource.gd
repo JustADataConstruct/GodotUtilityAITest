@@ -18,9 +18,13 @@ func _process(delta):
 
 #TODO: Use collision layers to make sure only bodies that can actually eat can toggle this.
 func _on_body_entered(body):
+	if body.name != "Agent":
+		return
 	body.current_resource_node = self
 
 func _on_body_exited(body):
+	if body.name != "Agent":
+		return
 	body.current_resource_node = null
 	
 func try_consume() -> bool:

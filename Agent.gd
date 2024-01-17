@@ -1,7 +1,5 @@
 extends CharacterBody3D
 
-
-
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
@@ -9,12 +7,6 @@ const JUMP_VELOCITY = 4.5
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var agent:UtilityAIAgent
 var current_action:UtilityAIAction
-
-# For the debugging panel
-@export var current_behavior_label:String
-@export var top_behavior_label:String
-@export var current_action_label:String
-@export var export_button_restart = "Restart scene"
 
 # Needs
 @export var hunger:float = 0.5
@@ -38,11 +30,8 @@ func _ready():
 	
 
 func _process(delta):
-	current_behavior_label = agent.current_behaviour_name
-	top_behavior_label = agent.top_scoring_behaviour_name
-	
 	hunger_sensor.sensor_value = hunger
-	is_at_eating_spot_sensor.boolean_value = current_resource_node != null and current_resource_node.is_in_group("food_resource")
+	is_at_eating_spot_sensor.boolean_value = (current_resource_node != null) and (current_resource_node.is_in_group("food_resource"))
 	danger_sensor.boolean_value = in_danger
 	resource_sensor.boolean_value = current_resource_node.amount > 0 if current_resource_node != null else false
 
@@ -58,7 +47,6 @@ func _on_utility_ai_agent_action_changed(action_node):
 	current_action = action_node
 	if current_action != null:
 		current_action.start_action(self)
-		current_action_label = current_action.get_name()
 
 func _physics_process(delta):
 	if not is_on_floor():

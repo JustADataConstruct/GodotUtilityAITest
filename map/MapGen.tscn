@@ -1,0 +1,143 @@
+[gd_scene load_steps=16 format=3 uid="uid://55g3jk8s7a3h"]
+
+[ext_resource type="Script" path="res://map/MapGen.gd" id="1_7x168"]
+[ext_resource type="Script" path="res://map/freecamera.gd" id="2_51jlg"]
+[ext_resource type="Script" path="res://Agent.gd" id="3_h4idf"]
+[ext_resource type="PackedScene" uid="uid://bwl07dc517o6j" path="res://actions/FindResourceAction.tscn" id="4_3t4qg"]
+[ext_resource type="PackedScene" uid="uid://d2uvlk6lf37s4" path="res://actions/MoveToPointAction.tscn" id="5_r40dq"]
+[ext_resource type="PackedScene" uid="uid://bg1ggnmfbmjln" path="res://actions/EatAction.tscn" id="6_qa640"]
+[ext_resource type="PackedScene" uid="uid://e423q26evy41" path="res://actions/FindRandomPointAction.tscn" id="7_vv81s"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_akfae"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_3hai8"]
+sky_material = SubResource("ProceduralSkyMaterial_akfae")
+
+[sub_resource type="Environment" id="Environment_dghff"]
+background_mode = 2
+sky = SubResource("Sky_3hai8")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="Curve" id="Curve_dgvjp"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.420792, 0), -0.0716054, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jc0uv"]
+radius = 1.0
+height = 4.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c77s1"]
+radius = 1.0
+height = 4.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_tq1mf"]
+size = Vector3(30, 1, 30)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_nau6x"]
+data = PackedVector3Array(-15, 0.5, 15, 15, 0.5, 15, -15, -0.5, 15, 15, 0.5, 15, 15, -0.5, 15, -15, -0.5, 15, 15, 0.5, -15, -15, 0.5, -15, 15, -0.5, -15, -15, 0.5, -15, -15, -0.5, -15, 15, -0.5, -15, 15, 0.5, 15, 15, 0.5, -15, 15, -0.5, 15, 15, 0.5, -15, 15, -0.5, -15, 15, -0.5, 15, -15, 0.5, -15, -15, 0.5, 15, -15, -0.5, -15, -15, 0.5, 15, -15, -0.5, 15, -15, -0.5, -15, 15, 0.5, 15, -15, 0.5, 15, 15, 0.5, -15, -15, 0.5, 15, -15, 0.5, -15, 15, 0.5, -15, -15, -0.5, 15, 15, -0.5, 15, -15, -0.5, -15, 15, -0.5, 15, 15, -0.5, -15, -15, -0.5, -15)
+
+[node name="MapGen" type="Node3D"]
+script = ExtResource("1_7x168")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Regenerate"
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_dghff")
+
+[node name="freecamera" type="Camera3D" parent="."]
+script = ExtResource("2_51jlg")
+
+[node name="Agent" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.87597, 12.6188, 0)
+script = ExtResource("3_h4idf")
+
+[node name="UtilityAIAgent" type="UtilityAIAgent" parent="Agent"]
+
+[node name="HungerSensor" type="UtilityAISensor" parent="Agent/UtilityAIAgent"]
+
+[node name="AtEatingSpotSensor" type="UtilityAIBooleanSensor" parent="Agent/UtilityAIAgent"]
+
+[node name="DangerSensor" type="UtilityAIBooleanSensor" parent="Agent/UtilityAIAgent"]
+
+[node name="EnoughResourcesSensor" type="UtilityAIBooleanSensor" parent="Agent/UtilityAIAgent"]
+
+[node name="FindFood" type="UtilityAIBehaviour" parent="Agent/UtilityAIAgent"]
+
+[node name="Do I need to?" type="UtilityAIConsiderationGroup" parent="Agent/UtilityAIAgent/FindFood"]
+
+[node name="I am hungry" type="UtilityAIConsideration" parent="Agent/UtilityAIAgent/FindFood/Do I need to?"]
+activation_curve = SubResource("Curve_dgvjp")
+
+[node name="Not at an eating spot" type="UtilityAIBooleanConsideration" parent="Agent/UtilityAIAgent/FindFood/Do I need to?"]
+true_score_value = 0.0
+false_score_value = 1.0
+
+[node name="FindFoodAction" parent="Agent/UtilityAIAgent/FindFood" instance=ExtResource("4_3t4qg")]
+resource = "food_resource"
+
+[node name="MoveToFoodAction" parent="Agent/UtilityAIAgent/FindFood" instance=ExtResource("5_r40dq")]
+
+[node name="Eat" type="UtilityAIBehaviour" parent="Agent/UtilityAIAgent"]
+
+[node name="Can I eat?" type="UtilityAIConsiderationGroup" parent="Agent/UtilityAIAgent/Eat"]
+
+[node name="I am hungry" type="UtilityAIConsideration" parent="Agent/UtilityAIAgent/Eat/Can I eat?"]
+activation_curve = SubResource("Curve_dgvjp")
+
+[node name="I am at an eating spot" type="UtilityAIBooleanConsideration" parent="Agent/UtilityAIAgent/Eat/Can I eat?"]
+
+[node name="This eating spot has enough resources" type="UtilityAIBooleanConsideration" parent="Agent/UtilityAIAgent/Eat/Can I eat?"]
+
+[node name="I\'m not in danger" type="UtilityAIBooleanConsideration" parent="Agent/UtilityAIAgent/Eat/Can I eat?"]
+true_score_value = 0.0
+false_score_value = 1.0
+
+[node name="EatAction" parent="Agent/UtilityAIAgent/Eat" instance=ExtResource("6_qa640")]
+
+[node name="Idle" type="UtilityAIBehaviour" parent="Agent/UtilityAIAgent"]
+cooldown_seconds = 5.0
+
+[node name="Default" type="UtilityAIConsideration" parent="Agent/UtilityAIAgent/Idle"]
+activation_input_value = 0.1
+
+[node name="FindRandomPointAction" parent="Agent/UtilityAIAgent/Idle" instance=ExtResource("7_vv81s")]
+
+[node name="MoveToRandomAction" parent="Agent/UtilityAIAgent/Idle" instance=ExtResource("5_r40dq")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Agent"]
+mesh = SubResource("CapsuleMesh_jc0uv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Agent"]
+shape = SubResource("CapsuleShape3D_c77s1")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Agent"]
+path_desired_distance = 4.0
+debug_enabled = true
+debug_path_custom_color = Color(1, 0, 0, 1)
+
+[node name="Surface" type="Node3D" parent="."]
+
+[node name="Tiles" type="Node3D" parent="Surface"]
+
+[node name="Floor" type="MeshInstance3D" parent="Surface"]
+mesh = SubResource("BoxMesh_tq1mf")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Surface/Floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Surface/Floor/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_nau6x")
+
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
+[connection signal="action_changed" from="Agent/UtilityAIAgent" to="Agent" method="_on_utility_ai_agent_action_changed"]

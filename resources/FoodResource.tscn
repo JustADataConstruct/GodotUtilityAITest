@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://resources/FoodResource.gd" id="1_obd14"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_0ed78"]
-size = Vector2(6, 6)
+size = Vector2(5, 5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1jmpn"]
 albedo_color = Color(0, 1, 0.0235294, 1)
@@ -60,6 +60,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.218709, 0, 0.0704576)
 shape = SubResource("BoxShape3D_u4g1q")
 
 [node name="wheat2" type="Node3D" parent="."]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
 
 [node name="wheat" type="MeshInstance3D" parent="wheat2"]
 transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 1.48061, 1.29573, -1.26393)
@@ -67,7 +68,7 @@ mesh = SubResource("ArrayMesh_q37i4")
 skeleton = NodePath("")
 
 [node name="AmountLabel" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.20685, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4116, 0)
 pixel_size = 0.05
 billboard = 1
 text = "30"
